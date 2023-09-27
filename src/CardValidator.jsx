@@ -1,15 +1,19 @@
 // src/components/CreditCardValidator.js
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 const CardValidatorContainer = styled.div`
   width: 40%;
-  background-color: #007bff;
+  background-color: #007bff; //linear-gradient(to right top, #280537, #56034c, #890058, #bc005b, #eb1254);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   position: relative;
   color: #fff;
+
+  @media (max-width: 650px) {
+    width: 70%;
+  }
 `;
 
 const CardType = styled.div`
@@ -21,13 +25,14 @@ const CardType = styled.div`
 
 const InputContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
   margin-top: 20px;
+  gap: 1rem;
 `;
 
 const Input = styled.input`
-  width: 100%;
+  width: 20%;
   padding: 10px;
   margin-bottom: 10px;
   border: none;
@@ -97,62 +102,71 @@ const CreditCardValidator = () => {
   };
 
   return (
-    <CardValidatorContainer>
-      <CardType>{cardType}</CardType>
-      <h2>Card Number</h2>
-      <InputContainer>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+      }}
+    >
+      <CardValidatorContainer>
+        <CardType>{cardType}</CardType>
+        <h2>Card Number</h2>
+        <InputContainer>
+          <Input
+            type="text"
+            placeholder="XXXX"
+            value={cardNumber}
+            onChange={handleCardNumberChange}
+            maxLength="4"
+          />
+          <Input
+            type="text"
+            placeholder="XXXX"
+            value={cardNumber}
+            onChange={handleCardNumberChange}
+            maxLength="4"
+          />
+          <Input
+            type="text"
+            placeholder="XXXX"
+            value={cardNumber}
+            onChange={handleCardNumberChange}
+            maxLength="4"
+          />
+          <Input
+            type="text"
+            placeholder="XXXX"
+            value={cardNumber}
+            onChange={handleCardNumberChange}
+            maxLength="4"
+          />
+        </InputContainer>
+        <h2>Expiry Date</h2>
+        <SelectContainer>
+          <Select value={expiryMonth} onChange={handleExpiryMonthChange}>
+            {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
+              <option key={month}>{month < 10 ? `0${month}` : month}</option>
+            ))}
+          </Select>
+          <Select value={expiryYear} onChange={handleExpiryYearChange}>
+            {Array.from({ length: 28 }, (_, i) => i + 23).map((year) => (
+              <option key={year}>{year}</option>
+            ))}
+          </Select>
+        </SelectContainer>
+        <h2>CVV</h2>
         <Input
-          type="text"
-          placeholder="XXXX"
-          value={cardNumber}
-          onChange={handleCardNumberChange}
-          maxLength="4"
+          type="password"
+          placeholder="CVV"
+          value={cvv}
+          onChange={handleCVVChange}
+          maxLength="3"
         />
-        <Input
-          type="text"
-          placeholder="XXXX"
-          value={cardNumber}
-          onChange={handleCardNumberChange}
-          maxLength="4"
-        />
-        <Input
-          type="text"
-          placeholder="XXXX"
-          value={cardNumber}
-          onChange={handleCardNumberChange}
-          maxLength="4"
-        />
-        <Input
-          type="text"
-          placeholder="XXXX"
-          value={cardNumber}
-          onChange={handleCardNumberChange}
-          maxLength="4"
-        />
-      </InputContainer>
-      <h2>Expiry Date</h2>
-      <SelectContainer>
-        <Select value={expiryMonth} onChange={handleExpiryMonthChange}>
-          {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
-            <option key={month}>{month < 10 ? `0${month}` : month}</option>
-          ))}
-        </Select>
-        <Select value={expiryYear} onChange={handleExpiryYearChange}>
-          {Array.from({ length: 28 }, (_, i) => i + 23).map((year) => (
-            <option key={year}>{year}</option>
-          ))}
-        </Select>
-      </SelectContainer>
-      <h2>CVV</h2>
-      <Input
-        type="password"
-        placeholder="CVV"
-        value={cvv}
-        onChange={handleCVVChange}
-        maxLength="3"
-      />
-      <Result>Card Type: {cardType}</Result>
-    </CardValidatorContainer>
+        <Result>Card Type: {cardType}</Result>
+      </CardValidatorContainer>
+    </div>
   );
 };
 
